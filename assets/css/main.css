@@ -1,0 +1,19 @@
+/*
+ ====================
+    Font
+ ====================
+ */
+body {
+    font-family: Georgia, Times, "Times New Roman", serif !important;
+}
+
+/*
+ =====================
+
+ =====================
+ */
+
+.tradepending-poweredby-container {
+    background-image: url(//cdn.tradepending.com/PoweredByTPWhite.png);
+    background-repeat: no-repeat;
+}
