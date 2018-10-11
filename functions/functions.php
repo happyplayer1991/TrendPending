@@ -148,12 +148,12 @@ function get_api_Result($url) {
  * $field: The name of the field in which to search the given input
  * $input: The input to be searched for auto completion.
  */
-function search_auto_complete_with_filed_and_input($field, $input) {
+function search_auto_complete_with_field_and_input($field, $input) {
     
     // Search Auto-complete with Field & Input
-    $search_auto_complete_with_filed_and_input = "search/auto-complete?";
+    $search_auto_complete_with_field_and_input = "search/auto-complete?";
 
-    $url = $search_auto_complete_with_filed_and_input;
+    $url = $search_auto_complete_with_field_and_input;
 
     $url .= "api_key=" . API_KEY . "&";
     // $url .= "country=" . COUNTRY_CODE . "&";
@@ -164,3 +164,30 @@ function search_auto_complete_with_filed_and_input($field, $input) {
     // return $url;
 }
 
+/**
+ * GET Search Auto-complete with selections
+ * $field: The name of the field in which to search the given input
+ * $input: The input to be searched for auto completion.
+ */
+function search_auto_complete_with_selection($field, $input, $ymmt) {
+    
+    // Search Auto-complete with Field & Input
+    $search_auto_complete_with_field_and_input = "search/auto-complete?";
+
+    $url = $search_auto_complete_with_field_and_input;
+
+    $url .= "api_key=" . API_KEY . "&";
+    // $url .= "country=" . COUNTRY_CODE . "&";
+    $url .= "field=" . $field . "&";
+    $url .= "input=" . $input . "&";
+
+    //set year, model, make, trim
+    $url .= "year="  . $ymmt['year']  . "&";
+    $url .= "make="  . $ymmt['make']  . "&";
+    $url .= "model=" . $ymmt['model'] . "&";
+    $url .= "trim="  . $ymmt['trim'];
+    // $url .= "term_counts=true&";
+    // $url .= "state=" . $state;
+
+    return get_api_Result($url);
+}

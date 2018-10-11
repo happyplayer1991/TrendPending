@@ -17,3 +17,7 @@ body {
     background-image: url(//cdn.tradepending.com/PoweredByTPWhite.png);
     background-repeat: no-repeat;
 }
+
+.display-hide {
+    display: none;
+}

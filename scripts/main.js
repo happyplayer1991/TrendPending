@@ -1,4 +1,7 @@
 (function ($) {
+
+    var car_data = {};
+
     $('.simple-select2').select2({
         ajax: {
             // url: "http://localhost/PHP/TrendPending/api/get_ymmt_list",
@@ -56,28 +59,34 @@
         templateSelection: formatRepoSelection
     });
 
-    $('.simple-select2').on("select2:select", function(e) { 
+    $('.simple-select2').on("select2:select", function(e) {
+      // *** init *** //
+      car_data = {}; 
       // console.log('selected');
       var data = $(this).select2('data'),
           text = data[0].text;
-      // console.log(text);
 
-      $.ajax({
-        type: 'POST',
-        url: 'api/get_report',
-        
-        dataType: 'json',
-        
-        // *** Fix CORS issue *** //
-        headers : {
-          'Access-Control-Allow-Origin' : '*'
-        },
-        data: {
+      year = '2018';
+      make = 'Ford';
+      // model = 'Taurus';
+      model = 'EcoSport';
+      // trim = 'SE';
+      trim = 'S';
 
-        },
-        success: function(suc, res) {
-          console.log(suc);
-        }
+      // *** Get drivetrain *** //
+      var deferred = get_field_data('drivetrain');
+      $.when(deferred).done(function() {
+
+          vehicle_type  = year + " ";
+          vehicle_type += make + " ";
+          vehicle_type += model + " ";
+          vehicle_type += trim + " ";
+          // vehicle_type += car_data.drivetrain;
+
+          $('#reportModal').modal('show');
+          $('.vehicle-type').html(vehicle_type);
+
+          $('.vehicle-details')
       });
     });
 
@@ -91,6 +100,40 @@
         return data.text;
     }
 
+    function get_field_data(field) {
+      
+      return $.get('api/get_report', {field: field}, function(data, status) {
+        terms = data.terms;
+
+        // *** show show_select_drivetrain part *** //
+        if(terms.length > 1) {
+          show_select_drivetrain(terms);
+        
+        }
+        console.log(terms);
+        // car_data[field] = terms;
+      }, 'json');
+
+    };
+
+    function show_select_drivetrain(terms) {
+      $drivetrain_panel = $('.select-drivetrain-panel');
+      $drivetrain_panel.removeClass('display-hide');
+
+      $drivetrain_panel.html('');
+      terms.forEach(function(term) {
+        element = btn_drivetrain(term);
+        $(element).appendTo('.select-drivetrain-panel');
+      });
+    }
+
+    function btn_drivetrain(drivetrain) {
+
+      button_temp = "<button type='button' class='btn btn-outline-danger btn-block'>" +
+                    drivetrain +
+                    "</button>";
+      return button_temp;
+    }
 })(jQuery);
 
 

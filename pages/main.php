@@ -73,6 +73,32 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title vehicle-type"></h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="select-drivetrain-panel display-hide">
+                        
+                    </div>
+                    <h4 class="text-center vehicle-details"></h4>
+                </div>
+                <!--
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Okay</button>
+                </div>
+                -->
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!---------  Plugins --------->

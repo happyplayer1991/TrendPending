@@ -2,7 +2,22 @@
 
 require_once 'functions/functions.php';
 
-$array = array();
-$array['status'] = '123';
+if(!empty($_GET['field'])):
 
-echo json_encode($array);
+    $field = $_GET['field'];
+
+    $ymmt = array( 
+        'year' => '2018',
+        'make' => 'Ford',
+        'model' => 'EcoSport',
+        'trim' => 'S'
+    );
+
+    if($field == 'drivetrain'):
+        $result = search_auto_complete_with_selection('drivetrain', '', $ymmt);
+    elseif($field == 'body_type'): 
+        $result = search_auto_complete_with_selection('body_type', '', $ymmt);
+    endif;
+
+    echo $result;
+endif;
