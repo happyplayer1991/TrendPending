@@ -8,7 +8,7 @@
     
     <!---------  Plugins --------->
     <link rel="stylesheet" type="text/css" href="./assets/plugins/bootstrap/4.1.3/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/plugins/select2/4.0.5/css/select2.min.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/plugins/select2/4.0.6-rc.1/css/select2.min.css" />
     <link rel="stylesheet" href="./node_modules/select2-bootstrap4-theme/dist/select2-bootstrap4.css">
 
     <!---------  Custom CSS --------->
@@ -80,7 +80,7 @@
     <script src="./assets/plugins/jquery/3.3.1/jquery.min.js"></script>
     <script src="./assets/plugins/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="./assets/plugins/bootstrap/4.1.3/bootstrap.min.js"></script>
-    <script src="./assets/plugins/select2/4.0.5/js/select2.full.min.js"></script>
+    <script src="./assets/plugins/select2/4.0.6-rc.1/js/select2.full.min.js"></script>
 
     <!---------  Custom JS --------->
     <script src="./scripts/main.js"></script>

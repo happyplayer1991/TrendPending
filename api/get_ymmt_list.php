@@ -1,15 +1,19 @@
 <?php
 
-require 'functions/functions.php';
+require_once 'functions/functions.php';
 
-$result = array();
+if(!empty($_GET['q'])):
 
-// $ip_info = ip_info();
-// $country_code = $ip_info->country_code;
+    $query = $_GET['q'];
 
-$country_code = "CA";
+    
+    // $response = array();
+    // $response['search'] = search_auto_complete('ymm', '2018f');
+    // echo json_encode($response);
 
+    // *** get result after call search_auto_complete_with_filed_and_input api
+    $result = search_auto_complete_with_filed_and_input('ymm', $query);
 
-echo json_encode($result);
-
+    echo $result;
+endif;
 ?>

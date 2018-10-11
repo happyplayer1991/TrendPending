@@ -13,6 +13,7 @@ switch ($request_uri[3]) {
         break;
 
     //API
+    
     case 'api':
         if(strpos($request_uri[4], 'get_ymmt_list') !== false):
             require 'api/get_ymmt_list.php';
@@ -20,6 +21,7 @@ switch ($request_uri[3]) {
             require 'api/get_report.php';
         endif;
         break;
+    
     // Everything else
     default:
 

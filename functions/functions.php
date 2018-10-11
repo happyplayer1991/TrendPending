@@ -1,5 +1,7 @@
 <?php 
 
+require 'config/config.php';
+
 /**
  * Call API and get result
  * $method: POST, PUT, GET etc 
@@ -43,7 +45,9 @@ function CallAPI($method, $url, $data = false)
 
 /**
  * Get address, city, state, region, country, countrycode from ip
- * 
+ * $ip: client ip
+ * $purpose: locatin to get
+ * $deep_detect: deeply detect?
  */
 function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
     $output = NULL;
@@ -108,5 +112,55 @@ function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
         }
     }
     return $output;
+}
+
+/**
+ * GET marketcheck api result
+ * $url: api url
+ */
+function get_api_Result($url) {
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => API_URL . $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array("host: marketcheck-prod.apigee.net")
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+        return null;
+    } else {
+        return $response;
+    }
+}
+
+/**
+ * GET Search Auto-complete with Field & Input
+ * $field: The name of the field in which to search the given input
+ * $input: The input to be searched for auto completion.
+ */
+function search_auto_complete_with_filed_and_input($field, $input) {
+    
+    // Search Auto-complete with Field & Input
+    $search_auto_complete_with_filed_and_input = "search/auto-complete?";
+
+    $url = $search_auto_complete_with_filed_and_input;
+
+    $url .= "api_key=" . API_KEY . "&";
+    // $url .= "country=" . COUNTRY_CODE . "&";
+    $url .= "field=" . $field . "&";
+    $url .= "input=" . $input;
+
+    return get_api_Result($url);
+    // return $url;
 }
 
