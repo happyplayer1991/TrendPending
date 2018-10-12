@@ -15,8 +15,8 @@ switch ($request_uri[3]) {
     //API
     
     case 'api':
-        if(strpos($request_uri[4], 'get_ymmt_list') !== false):
-            require 'api/get_ymmt_list.php';
+        if(strpos($request_uri[4], 'get_vehicle_list') !== false):
+            require 'api/get_vehicle_list.php';
         elseif(strpos($request_uri[4], 'get_report') !== false):
             require 'api/get_report.php';
         endif;

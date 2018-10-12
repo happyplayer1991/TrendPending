@@ -159,6 +159,9 @@ function search_auto_complete_with_field_and_input($field, $input) {
     // $url .= "country=" . COUNTRY_CODE . "&";
     $url .= "field=" . $field . "&";
     $url .= "input=" . $input;
+    
+    //Add country
+    // $url .= "&country=CA";
 
     return get_api_Result($url);
     // return $url;
@@ -169,7 +172,7 @@ function search_auto_complete_with_field_and_input($field, $input) {
  * $field: The name of the field in which to search the given input
  * $input: The input to be searched for auto completion.
  */
-function search_auto_complete_with_selection($field, $input, $ymmt) {
+function search_auto_complete_with_selection($selection_field, $field, $input, $vehicle) {
     
     // Search Auto-complete with Field & Input
     $search_auto_complete_with_field_and_input = "search/auto-complete?";
@@ -181,13 +184,65 @@ function search_auto_complete_with_selection($field, $input, $ymmt) {
     $url .= "field=" . $field . "&";
     $url .= "input=" . $input . "&";
 
-    //set year, model, make, trim
-    $url .= "year="  . $ymmt['year']  . "&";
-    $url .= "make="  . $ymmt['make']  . "&";
-    $url .= "model=" . $ymmt['model'] . "&";
-    $url .= "trim="  . $ymmt['trim'];
-    // $url .= "term_counts=true&";
-    // $url .= "state=" . $state;
-
+    if($selection_field == 'ymmt') {
+        //set year, model, make, trim
+        $url .= "year="  . $vehicle['year']  . "&";
+        $url .= "make="  . $vehicle['make']  . "&";
+        $url .= "model=" . $vehicle['model'] . "&";
+        $url .= "trim="  . $vehicle['trim'];
+        if(array_key_exists('drive_train', $vehicle))
+            $url .= "&drivetrain=". $vehicle['drive_train'];
+        // $url .= "term_counts=true&";
+        // $url .= "state=" . $state;
+    }
+    else if($selection_field == 'ymm') {
+        $url .= "year="  . $vehicle['year']  . "&";
+        $url .= "make="  . $vehicle['make']  . "&";
+        $url .= "model=" . $vehicle['model'];
+    }
+    else if($selection_field == 'ym') {
+        $url .= "year="  . $vehicle['year']  . "&";
+        $url .= "make="  . $vehicle['make'];
+    }
     return get_api_Result($url);
 }
+
+function year_make_model($ymm_string) {
+    if($ymm_string == '') 
+        return null;
+
+    $val_arr = explode(" ", $ymm_string);
+    if(count($val_arr) == 1)
+        return null;
+
+    //get year
+    $year  = $val_arr[0];
+    $make  = '';
+    $model = '';
+    $result = '';
+    for($i = 1; $i < count($val_arr); $i++)
+    {
+        $vehicle = array();
+        if($i > 1)
+            $make .= " ";
+        $make .= $val_arr[$i];
+        $vehicle = [
+            'year' => $year, 
+            'make' => $make
+        ];
+        $result = search_auto_complete_with_selection('ym', 'model', '', $vehicle);
+        $result_arr = json_decode($result, true);
+        $terms = $result_arr['terms'];
+        if(!empty($terms)) {
+            $model_array = array_slice($val_arr, $i+1);
+            $model = join(" ", $model_array);
+            break;
+        }
+    }
+    return array(
+        'year' => $year,
+        'make' => $make,
+        'model' => $model
+    );
+}
+

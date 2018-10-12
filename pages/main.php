@@ -77,24 +77,51 @@
         <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title vehicle-type"></h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="select-drivetrain-panel display-hide">
-                        
+                    <div class="modal-header">
+                        <h2 class="modal-title vehicle-type"></h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <h4 class="text-center vehicle-details"></h4>
-                </div>
-                <!--
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Okay</button>
-                </div>
-                -->
+                    <div class="modal-body">
+                        <div class="select-drivetrain-panel display-hide">
+                                <h3 class="text-center">Select Drive Train of the Vehicle</h3>
+                                <div class="drivetrain_list">
+                                </div>
+                        </div>
+                        <div class="vehicle-info display-hide">
+                            <div class="form-group row">
+                                <label for="drivetrain" class="col-sm-2 text-primary">Drive Train:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext text-danger" name="driveTrain" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="engineSize" class="col-sm-2 text-primary">Engine Size:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext text-danger" name="engineSize" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="engineBlock" class="col-sm-2 text-primary">Engine Block:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext text-danger" name="engineBlock" value="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="fuelType" class="col-sm-2 text-primary">Fuel Type:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext text-danger" name="fuelType" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Okay</button>
+                    </div>
+                    -->
                 </div>
             </div>
         </div>

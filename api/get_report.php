@@ -6,18 +6,9 @@ if(!empty($_GET['field'])):
 
     $field = $_GET['field'];
 
-    $ymmt = array( 
-        'year' => '2018',
-        'make' => 'Ford',
-        'model' => 'EcoSport',
-        'trim' => 'S'
-    );
+    $vehicle = json_decode($_GET['vehicle'], true);
 
-    if($field == 'drivetrain'):
-        $result = search_auto_complete_with_selection('drivetrain', '', $ymmt);
-    elseif($field == 'body_type'): 
-        $result = search_auto_complete_with_selection('body_type', '', $ymmt);
-    endif;
+    $result = search_auto_complete_with_selection('ymmt', $field, '', $vehicle);
 
     echo $result;
 endif;
