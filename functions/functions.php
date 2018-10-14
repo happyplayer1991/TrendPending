@@ -175,16 +175,14 @@ function search_auto_complete_with_field_and_input($field, $input) {
 function search_auto_complete_with_selection($selection_field, $field, $input, $vehicle) {
     
     // Search Auto-complete with Field & Input
-    $search_auto_complete_with_field_and_input = "search/auto-complete?";
-
-    $url = $search_auto_complete_with_field_and_input;
+    $url  = "search/auto-complete?";
 
     $url .= "api_key=" . API_KEY . "&";
     // $url .= "country=" . COUNTRY_CODE . "&";
     $url .= "field=" . $field . "&";
     $url .= "input=" . $input . "&";
 
-    if($selection_field == 'ymmt') {
+    if($selection_field == "ymmt") {
         //set year, model, make, trim
         $url .= "year="  . $vehicle['year']  . "&";
         $url .= "make="  . $vehicle['make']  . "&";
@@ -195,19 +193,21 @@ function search_auto_complete_with_selection($selection_field, $field, $input, $
         // $url .= "term_counts=true&";
         // $url .= "state=" . $state;
     }
-    else if($selection_field == 'ymm') {
+    else if($selection_field == "ymm") {
         $url .= "year="  . $vehicle['year']  . "&";
         $url .= "make="  . $vehicle['make']  . "&";
         $url .= "model=" . $vehicle['model'];
     }
-    else if($selection_field == 'ym') {
+    else if($selection_field == "ym") {
         $url .= "year="  . $vehicle['year']  . "&";
         $url .= "make="  . $vehicle['make'];
     }
     return get_api_Result($url);
+    // return $url;
 }
 
 function year_make_model($ymm_string) {
+    
     if($ymm_string == '') 
         return null;
 
@@ -220,7 +220,8 @@ function year_make_model($ymm_string) {
     $make  = '';
     $model = '';
     $result = '';
-    for($i = 1; $i < count($val_arr); $i++)
+    // for($i = 1; $i < count($val_arr); $i++)
+    for($i = 1; $i < 2; $i++)
     {
         $vehicle = array();
         if($i > 1)
@@ -231,9 +232,9 @@ function year_make_model($ymm_string) {
             'make' => $make
         ];
         $result = search_auto_complete_with_selection('ym', 'model', '', $vehicle);
-        $result_arr = json_decode($result, true);
-        $terms = $result_arr['terms'];
-        if(!empty($terms)) {
+        $terms = json_decode($result, true)["terms"];
+        $model = count($terms);
+        if(count($terms) > 0) {
             $model_array = array_slice($val_arr, $i+1);
             $model = join(" ", $model_array);
             break;
@@ -245,4 +246,3 @@ function year_make_model($ymm_string) {
         'model' => $model
     );
 }
-

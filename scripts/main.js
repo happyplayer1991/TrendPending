@@ -30,18 +30,16 @@
 
           processResults: function (data, params) {
             // *** get data from response *** //
+            console.log("Process data");
             console.log(data);
 
             // *** format data to be used by select2 *** //
             var d = [];
             data.forEach(function(item) {
               d.push({
-                id:    'id', 
-                text:  item.year + " " + item.make + " " + item.model + " " + item.trim,
-                year:  item.year,
-                make:  item.make,
-                model: item.model,
-                trim:  item.trim
+                id: join_ymmt(item),
+                text: join_ymmt(item),
+                vehicle: item
               });
             });
             
@@ -67,16 +65,15 @@
   
   $('.simple-select2').on("select2:select", function(e) {
     // *** init *** //
-
-    var data = $(this).select2('data');
-    var item = data[0];
+    var data = $(this).select2('data'),
+      item = data[0].vehicle;
+    console.log(item);
     // year = '2018';
     // make = 'Ford';
     // model = 'Taurus';
     // // model = 'EcoSport';
     // trim = 'SE';
     // // trim = 'S';
-
 
     vehicle = {
       year: item.year,
@@ -195,7 +192,7 @@
   function get_bodyType() {
     return $.get('api/get_report', {field: 'body_type', vehicle: JSON.stringify(vehicle)}, function(data, status) {
       terms = data.terms;
-      console.log(terms);
+      console.log("Body Types: ",terms);
 
       if(terms.length > 1) {
         
@@ -213,7 +210,7 @@
   function get_engineSize() {
     return $.get('api/get_report', {field: 'engine_size', vehicle: JSON.stringify(vehicle)}, function(data, status) {
       terms = data.terms;
-      console.log(terms);
+      console.log("Engine Sizes: ",terms);
 
       if(terms.length > 1) {
         
@@ -228,7 +225,7 @@
   function get_engineBlock() {
     return $.get('api/get_report', {field: 'engine_block', vehicle: JSON.stringify(vehicle)}, function(data, status) {
       terms = data.terms;
-      console.log(terms);
+      console.log("Engine Blocks: ",terms);
 
       if(terms.length > 1) {
        
@@ -243,7 +240,7 @@
   function get_fuelType() {
     return $.get('api/get_report', {field: 'fuel_type', vehicle: JSON.stringify(vehicle)}, function(data, status) {
       terms = data.terms;
-      console.log(terms);
+      console.log("Fuel Types: ", terms);
 
       if(terms.length > 1) {
         
@@ -280,6 +277,10 @@
     $ele_vehicle_fueltype.val(fueltype);
   }
 
+  function join_ymmt(vehicle) {
+    var values = Object.values(vehicle);
+    return values.join(" ");
+  }
 })(jQuery);
 
 
