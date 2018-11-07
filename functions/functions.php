@@ -206,6 +206,61 @@ function search_auto_complete_with_selection($selection_field, $field, $input, $
     // return $url;
 }
 
+/**
+ * Get data for vehicle report
+ * Data report includes: 
+ * - vehicle info;
+ * - number for sale;
+ * - price range
+ * 
+ * @param array $vehicle 
+ *      structure: [
+ *          'year' => 0000, 
+ *          'make' => 'MAKE',
+ *          'model' => 'MODEL',
+ *          'trim' => 'TRIM',
+ *          'drivetrain' => 'DRIVETRAIN',
+ *          'body_type' => 'BODYTYPE'
+ *      ]
+ * 
+ * @param array $stats
+ *      Accepts values: 'prices', 'miles', 'dom'
+ *      dom - Days on Market
+ *      Combination is allowed
+ * 
+ * @param integer $start 
+ *        Parameter is the offset from which listings will be 
+ *      returned from the entire match set
+ *        Starts with 0, Upper limit of start param is 10,000
+ * 
+ * @param integer $rows
+ *        Parameter is the listings count you need 
+ *      to pull per page / per iteration. 
+ *        Rows parameter supports a max value of 50. 
+ *        Any value greater than 50 will be ignored 
+ *      and the API will then return only top 10 matching 
+ *      rows as that is default value
+ * 
+ * @return string|false
+ */
+function get_vehicle_report(array $vehicle, array $stats, $start = 0, $rows = 0) {
+    if (empty($stats)) {
+        return false;
+    }
+
+    $url = 
+        'search?api_key=' . API_KEY . 
+        '&start=' . $start .
+        '&rows=' . $rows . '&' .
+        http_build_query($vehicle) . '&' . 
+        http_build_query(
+            array('stats' => implode(",", $stats))
+        )
+    ;
+
+    return '{"vehicle":' . json_encode($vehicle) . ',"response":' . get_api_Result($url) . '}';
+}
+
 function year_make_model($ymm_string) {
     
     if($ymm_string == '') 
